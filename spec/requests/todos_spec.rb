@@ -7,6 +7,12 @@ describe "Todos" do
       response.status.should == 200
     end
 
+    context "a bunch of todos" do
+      (1..5).each do |i|
+        Todo.create!(title: "Todo number: #{i}")
+      end
+    end
+
     it "displays todos" do
       Todo.create!(title: "Red: Write specs and see them fail")
       get todos_path 
@@ -25,7 +31,7 @@ describe "Todos" do
         response.status.should == 200
       end
 
-      it "should be display the todo" do
+      it "should display the todo" do
         response.body.should include("Green: Get the specs to pass")
       end
     end
@@ -43,6 +49,7 @@ describe "Todos" do
       end
 
       it "should create the todo" do
+        follow_redirect!
         response.body.should include("Refactor: Clean up your code")
       end
     end
